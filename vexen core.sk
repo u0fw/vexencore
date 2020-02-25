@@ -1,1 +1,1154 @@
-t
+options:
+	version: 1.0
+	SubMessage: VexenCore by Diamistic
+	perm.law: &5&lVEXEN &8» &7You do not have permission &bLaw&7 required to execute this command.
+	perm.mod: &5&lVEXEN &8» &7You do not have rank &9Moderator&7 required to execute this command.
+	perm.admin: &5&lVEXEN &8» &7You do not have rank &cAdministrator&7 required to execute this command.
+	prefix: &5&lVEXEN &8»&7
+	acprefix: &5&lVEXEN ANTI-CHEAT [VAC] &8»&7
+	CombatTimer: 9 #1 away from the actual amount, for example, 9 instead of 10
+
+script options:
+	$ use permissions
+
+on load:
+	set {vexen.load.time} to now
+	broadcast "{@prefix} Starting."
+
+on load:
+	wait 2 seconds
+	set {_t} to difference between {vexen.load.time} and now
+	broadcast "{@prefix} Enabled in &c%{_t}%&7."
+	broadcast "{@prefix} &5VEXEN&7 Core by Diamistic. (Thaumiel)"
+
+on unload:
+	broadcast "{@prefix} Disabled."
+
+every 1 seconds:
+	loop all players:
+		clear {click.%loop-player%}
+
+every 1 seconds:
+	set {vexen.realgold} to true
+	set {vexen.youfool.diamistic} to true
+
+every 3.3 seconds:
+	loop all players:
+		set action bar of loop-player to "&5Welcome to v^S."
+		wait 0.2 second
+		set action bar of loop-player to "&1W&5elcome to v^S."
+		wait 0.2 second
+		set action bar of loop-player to "&1We&5lcome to v^S."
+		wait 0.2 second
+		set action bar of loop-player to "&1Wel&5come to v^S."
+		wait 0.2 second
+		set action bar of loop-player to "&5W&1elc&5ome to v^S."
+		wait 0.2 second
+		set action bar of loop-player to "&5We&1lco&5me to v^S."
+		wait 0.2 second
+		set action bar of loop-player to "&5Wel&1com&5e to v^S."
+		wait 0.2 second
+		set action bar of loop-player to "&5Welc&1ome&5 to v^S."
+		wait 0.2 second
+		set action bar of loop-player to "&5Welco&1me t&5o v^S."
+		wait 0.2 second
+		set action bar of loop-player to "&5Welcom&1e to&5 v^S."
+		wait 0.2 second
+		set action bar of loop-player to "&5Welcome &1to v&5^S."
+		wait 0.2 second
+		set action bar of loop-player to "&5Welcome t&1o v^&5S."
+		wait 0.2 second
+		set action bar of loop-player to "&5Welcome to &1v^S&5."
+		wait 0.2 second
+		set action bar of loop-player to "&5Welcome to v&1^S.&5"
+		wait 0.2 second
+		set action bar of loop-player to "&5Welcome to v^&1S.&5"
+		wait 0.2 second
+		set action bar of loop-player to "&5Welcome to v^S&1.&5"
+		wait 0.2 second
+		set action bar of loop-player to "&5Welcome to v^S."
+
+every 300 seconds:
+	if {vexen.autobanreal} is "true":
+	loop all players:
+		if {vexen.%loop-player%} is "true":
+			kick %loop-player% for "&fLost connection."
+			ban %loop-player% for "&cAccount terminated.%nl%&cBanned by &5VAC&c for Cheating.%nl%&e%nl%&bBanned permanently."
+
+command /autobanreal:
+	permission: admin
+	permission message: {@perm.admin}
+	trigger:
+		if {vexen.autobanreal} is not "true":
+			loop all players:
+				if {vexen.%loop-player%} is "true":
+					stop
+				else:
+					send "{@prefix} %player% enabled realgolddog autoban every 5 minutes. rea;lgold such a noob... lol!" to loop-player
+					send "{@prefix} shhh, don't tell anyone, espeially not real....!!" to loop-player
+		else:
+			loop all players:
+				if {vexen.%loop-player%} is "true":
+					stop
+				else:
+					send "{@prefix} wow... %player% did noob move and disable realgolddog autoban every 5 minutes..." to loop-player
+					send "{@prefix} shhh, don't tell anyone, especially not real....!!" to loop-player
+
+#Combat-Log
+#Combat-Log
+#Combat-Log
+
+
+
+
+#Anti-Cheat
+#Anti-Cheat
+#Anti-Cheat
+
+on walk on water:
+	set {_loc} to location of player
+	add 2 to y-coordinate of {_loc}
+	if block at {_loc} is air:
+		add 1 to {vac.jesus.%player%}
+		if {dac.jesus.%player%} is greater than 6:
+			gamemode of player is survival
+			delete {vac.jesus.%player%}
+			loop all players:
+				if loop-player has permissions "mod":
+					set {_p} to loop-player
+					send "{@acprefix} %player% suspected of using &cJesus&7." to loop-player
+
+on damage of villager:
+	if attacker is a player:
+	if name of the damaged villager contains "&5&lVAC":
+		increase damage by 100
+		loop all players:
+			if loop-player has permissions "mod":
+				set {_p} to loop-player
+				send "{@acprefix} %player% suspected of using &cKillAura&7." to loop-player
+
+command /cheattest [<player>]:
+	permission: diamistic
+	permission message: &fUnknown command. Type "/help" for help.
+	trigger:
+		if arg-1 is not set:
+			send "&cHack Test>&7 Invalid Args: /hacktest <player>"
+		else:
+			spawn 1 villager 8 meters behind arg 1
+			set the name of the spawned villager to "&5&lVAC &7%arg-1%"
+			teleport spawned villager 3 meters in front of arg 1
+			wait 0.4 second
+			teleport spawned villager 4 meters behind arg 1
+			wait 0.5 second
+			teleport spawned villager 4 meters above arg 1
+			wait 0.3 second
+			teleport spawned villager 3 meters under arg 1
+			wait 0.6 second
+			teleport spawned villager 2 meters left of arg 1
+			wait 0.2 second
+			teleport spawned villager 5 meters right of arg 1
+			wait 0.7 second
+			kill the spawned villager
+
+#every 2 minutes:
+#	loop all players:
+#		execute console command "/ABSOLUTELYNOTHING %loop-player%"
+
+command /vexen [<text>] [<text.]:
+	permission: admin
+	permission message: {@perm.admin}
+	trigger:
+		if arg-1 is not set:
+			send "{@prefix} Hi? You need to specify a variable."
+			send "&c"
+			send "{@prefix} /vexen refresh - &cAdministrator &7- Refreshes all systems."
+			send "{@prefix} /vexen reload [script name, ex, CustomItems or KonoStandoPowa] - &cAdministrator &7- Restarts a script."
+			send "{@prefix} /vexen enable [script name]"
+			send "{@prefix} /vexen disable [script name]"
+			send "{@prefix} /vexen lock - locks/unlocks the server"
+			send "&c"
+		else if arg-1 is set:
+			if arg-1 is "lock":
+				if {vexen.lock} is true:
+					set {vexen.lock} to false
+					set {vexen.lock.user} to "none"
+					broadcast "{@prefix} &c%player% &7unlocked the server."
+				if {vexen.lock} is false:
+					set {vexen.lock} to true
+					set {vexen.lock.user} to "%player%"
+					broadcast "{@prefix} &c%player% &7locked the server."
+					loop all players:
+						loop-player does not have permission "mod"
+						kick loop-player due to "&cServer has been locked by %player%."
+			if arg-1 is "refresh":
+				send "{@prefix} Restarting."
+				execute console command "/skript reload %script%"
+			else if arg-1 is "reload":
+				if arg-2 is set:
+					send "{@prefix} Reloading %arg-2%."
+					execute console command "/skript reload %arg-2%"
+				else:
+					send "{@prefix} Please specify something to reload."
+			else if arg-1 is "enable":
+				if arg-2 is set:
+					send "{@prefix} Enabling %arg-2%."
+					execute console command "/skript enable %arg-2%"
+				else:
+					send "{@prefix} Please specify a script to enable."
+			else if arg-1 is "disable":
+				if arg-2 is set:
+					send "{@prefix} Disabling %arg-2%."
+					execute console command "/skript disable %arg-2%"
+				else:
+					send "{@prefix} Please specify a script to disable."
+			else:
+				send "{@prefix} Argument not recognized."
+
+command /serverlock:
+	permission: mod
+	permission message: {@perm.mod}
+	trigger:
+		if {vexen.lock} is true:
+			set {vexen.lock} to false
+			broadcast "{@prefix} &c%player% &7unlocked the server."
+		if {vexen.lock} is false:
+			set {vexen.lock} to true
+			broadcast "{@prefix} &c%player% &7locked the server."
+			loop all players:
+				if loop-player does not have permission "mod":
+					kick loop-player due to "&cServer has been locked by %player%."
+
+on connect:
+	if {vexen.lock} is true:
+		player does not have permission "mod"
+		kick the player due to "&cServer has been locked by {@vexen.lock.user}."
+
+on spawn of an ender dragon:
+	broadcast "{@prefix} A dragon has spawned."
+
+on spawn of a wither:
+	broadcast "{@prefix} The Wither has spawned."
+
+command /setspawn:
+	permission: admin
+	permission message: {@perm.admin}
+	trigger:
+		set {vexen.spawn} to location of player
+		send "{@prefix} Spawn has been set to your location."
+
+command /spawn:
+	trigger:
+		if {vexen.spawn} is not set:
+			send "{@error}"
+		else:
+			teleport player to {vexen.spawn}
+			send "{@prefix} Teleported to spawn."
+
+command /launch [<player>]:
+	permission: mod
+	permission message: {@perm.mod}
+	trigger:
+		if arg-1 is not set:
+			send "{@prefix} Please specify a player."
+		else:
+			broadcast "&7%player% &8» &c&l&o&nBEGONE"
+			loop 300 times:
+				push the victim upwards
+
+command /dirtyfireworks:
+	permission: dirtyfireworks
+	permission message: &5&lVEXEN &8» &7You do not have permission &fdirtyfireworks&7 required to execute this command.
+	trigger:
+		send "{@prefix} Hit someone within 10 seconds."
+		set {vexen.galaxybreaker.%player%} to true
+		wait 10 seconds
+		set {vexen.galaxybreaker.%player%} to false
+
+on damage:
+	if {vexen.damage.%attacker%} is false:
+		if {vexen.freezebug} is not true:
+			cancel event
+
+on any movement:
+	if {vexen.movement.%player%} is false:
+		if {vexen.freezebug} is not true:
+			cancel event
+
+on pick up:
+	if {vexen.pickup.%player%} is false:
+		if {vexen.freezebug} is not true:
+			cancel event
+
+on damage:
+	if {vexen.galaxybreaker.%attacker%} is true:
+		if {vexen.freezebug} is not true:
+			if {vexen.youfool.%victim%} is not true:
+				cancel event
+				set {vexen.galaxybreaker.%attacker%} to false
+				set {vexen.damage.%attacker%} to false
+				set {vexen.damage.%victim%} to false
+				set {vexen.movement.%attacker%} to false
+				loop 200 times:
+					push the victim upwards
+				broadcast "&1[Vegeta] %attacker% &8» &7Die!"
+				wait 1 second
+				broadcast "&7%victim% &8» &7GGGGGGGGAAAAAAAAAAAAAAAAAHHHHHHHH--!"
+				wait 2 second
+				broadcast "&1[Vegeta] %attacker% &8» &7Dirty fireworks."
+				wait 1 second
+				kill victim
+				set {vexen.movement.%attacker%} to true
+				set {vexen.damage.%victim%} to true
+				set {vexen.damage.%attacker%} to true
+			else:
+				cancel event
+				set {vexen.galaxybreaker.%attacker%} to false
+				set {vexen.damage.%attacker%} to false
+				set {vexen.damage.%victim%} to false
+				set {vexen.movement.%attacker%} to false
+				loop 200 times:
+					push the victim upwards
+				broadcast "&1[Vegeta] %attacker% &8» &7Die!"
+				wait 1 second
+				broadcast "&1[Vegeta] %attacker% &8» &7Maybe you won't be such a disappointment in the next dimension!"
+				wait 0.5 second
+				broadcast "&e[SSJ] %victim% &8» &7YOU FOOL!"
+				wait 0.5 second
+				kill attacker
+				set {vexen.movement.%attacker} to true
+				set {vexen.damage.%victim%} to true
+				set {vexen.damage.%attacker%} to true
+
+command /pvp:
+	permission: mod
+	permission message: {@perm.mod}
+	trigger:
+		if {vexen.pvp} is false:
+			broadcast "{@prefix} %player% enabled PvP in all worlds."
+			set {vexen.pvp} to true
+		else if {vexen.pvp} is not false:
+			broadcast "{@prefix} %player% disabled PvP in all worlds."
+			set {vexen.pvp} to false
+
+on damage:
+	if attacker is a player:
+		if victim is a player:
+			if {vexen.pvp} is false:
+				cancel event
+				send "{@prefix} PvP is currently disabled at this time."
+
+command /nitro [<player>]:
+	permission: admin
+	permission message: {@perm.admin}
+	trigger:
+		if arg-1 is not set:
+			send "{@prefix} Specify who to give Nitro permissions to."
+		else:
+			if {vexen.nitro.%arg-1%} is not true:
+				send "{@prefix} &cYou &7gave &c%arg-1%&7 nitro powers." to player
+				send "{@prefix} &c%player% &7gave &cyou&7 nitro powers." to arg-1
+				broadcast "{@prefix} &c%player% &7gave &c%arg-1&7 nitro powers."
+				set {vexen.nitro.%arg-1%} to true
+			else if {vexen.nitro.%arg-1%} is true:
+				send "{@prefix} &cYou &7removed &c%arg-1%&7's nitro powers." to player
+				send "{@prefix} &c%player% &7removed nitro permissions from &cyou&7." to arg-1
+				broadcast "{@prefix} &c%player% &7removed &c%arg-1%&7's nitro powers."
+				set {vexen.nitro.%arg-1%} to false
+
+every 2 seconds:
+	loop all players:
+		if {vexen.nitro.%loop-player%} is true:
+			apply speed 2 to the loop-player for 4 seconds
+
+command /sudo [<player>] [<text>]:
+	permission: mod
+	permission message: {@perm.mod}
+	trigger:
+		if arg-2 is not set:
+			send "{@prefix} Specify who you want to command and force them to execute. (or all)"
+		else:
+			if arg-1 is "Poopymayonnaise":
+				execute console command "/ac %player% attempted to sudo Rev."
+			else if arg-1 is "Diamistic":
+				execute console command "/ac %player% attempted to sudo Thaumiel."
+			else:
+				loop all players:
+				execute console command "/esudo %arg-1% %arg-2%"
+				send "{@prefix} Forced %arg-1% to do /%arg-2%. TIP: You can also do c: before a command to force them to say something!"
+
+command /freezebug:
+	permission: admin
+	permission message: {@perm.admin}
+	trigger:
+		if {vexen.freezebug} is not true:
+			set {vexen.freezebug} to true
+			broadcast "{@prefix} %player% enabled the Freezebug fix."
+		else:
+			set {vexen.freezebug} to false
+			broadcast "{@prefix} %player% disabled the Freezebug fix."
+
+command /customgive [<text>]:
+	aliases: /vgive, /cgive
+	permission: mod
+	permission message: {@perm.mod}
+	trigger:
+		if arg-1 is not set:
+			send "{@prefix} dragonsword"
+			send "{@prefix} arrestbaton"
+			send "{@prefix} amethyst"
+		else:
+			if arg-1 is "dragonsword":
+				execute console command "/egive %player% diamondsword 1 lore:&5Dragon_Sword"
+				send "{@prefix} Gave 1 &cDragon Sword&7 to &c%player%&7."
+				broadcast "{@prefix} &c%player% &7gave &c%player% Dragon Sword&7."
+			else if arg-1 is "arrestbaton":
+				execute console command "/egive %player% blazerod 1 name:&5Arrest_Baton lore:&5Arrest_Baton"
+				send "{@prefix} Gave 1 &cArrest Baton&7 to &c%player%&7."
+				broadcast "{@prefix} &c%player% &7gave &c%player% Arrest Baton&7."
+			else if arg-1 is "amethyst":
+				execute console command "/egive %player% diamond 1 name:&5Amethyst lore:&cDo_Not_Rename_-_Exchange_With_Worksman"
+				send "{@prefix} Gave 1 &cAmethyst&7 to &c%player%&7."
+				broadcast "{@prefix} &c%player% &7gave &c%player% Amethyst&7."
+			else:
+				send "{@prefix} dragonsword"
+				send "{@prefix} arrestbaton"
+				send "{@prefix} amethyst"
+
+on damage:
+	if uncolored line 1 of lore of attacker's tool is "Arrest Baton":
+		if attacker has permission "law":
+			if {vexen.arrest.%attacker%} is "1":
+				send "{@prefix} You were hit by %attacker%'s Arrest Baton twice." to victim
+				send "{@prefix} You hit %victim% with your Arrest Baton twice." to attacker
+				set {vexen.arrest.%attacker%} to "2"
+			else if {vexen.arrest.%attacker%} is "2":
+				send "{@prefix} You were hit by %attacker%'s Arrest Baton three times." to victim
+				send "{@prefix} You hit %victim% with your Arrest Baton three times." to attacker
+				set {vexen.arrest.%attacker%} to "3"
+			else if {vexen.arrest.%attacker%} is "3":
+				send "{@prefix} You were arrested by %attacker%." to victim
+				send "{@prefix} You arrested %victim%." to attacker
+				broadcast "{@prefix} %victim% was arrested by %attacker% for 10 minutes."
+				set {vexen.arrest.%attacker%} to "0"
+				execute console command "/ejail %victim% prison 10m"
+				set {vexen.arrested.%victim%} to "599"
+				set {vexen.arresting.%victim%} to true
+			else:
+				send "{@prefix} You were hit by %attacker%'s Arrest Baton once." to victim
+				send "{@prefix} You hit %victim% with your Arrest Baton once." to attacker
+				set {vexen.arrest.%attacker%} to "1"
+				wait 59 seconds
+				set {vexen.arrest.%attacker%} to "0"
+		else:
+			execute console command "/ejail %attacker% prison 60m"
+			broadcast "{@acprefix} &c%attacker% &7has been arrested for an hour for illegal possession of an &cArrest Baton&7."
+
+command /extend [<player>] [<number>]:
+	permission: law
+	permission message: {@perm.law}
+	trigger:
+		if {vexen.arresting.%victim%} is true:
+			execute console command "/ejail %arg-1% prison %arg-2%m"
+			set {_multiplier} to "60"
+			set {_extension} to arg 2
+			broadcast "{@prefix} &c%player% &7extended &c%arg-1%&7's Sentence to &c%arg-2%&7 minutes."
+			set {vexen.arrested.%arg-1%} to {_extension} * {_multiplier}
+
+every 1 seconds:
+	loop all players:
+		if {vexen.arresting.%loop-player%} is true:
+			if {vexen.arrested.%loop-player%} > 0:
+				remove 1 from {vexen.arrested.%loop-player%}
+			else:
+				set {vexen.arresting.%loop-player%} to false
+
+command /release [<player>]:
+	permission: law
+	permission message: {@perm.law}
+	trigger:
+		if {vexen.arresting.%arg-1%} is true:
+			execute console command "/eunjail %arg-1%"
+			set {vexen.arresting.%arg-1%} to false
+			set {vexen.arrested.%arg-1%} to 0
+			broadcast "{@prefix} &c%player% &7released &c%arg-1% &7from prison."
+
+on damage:
+	if uncolored line 1 of lore of attacker's tool is "Dragon Sword":
+		if chance of 20%:
+			send "{@prefix} %victim% has received the Dragon Sword's effects." to attacker
+			send "{@prefix} You were hit by %attacker%'s Dragon Sword." to victim
+			play "ENTITY_ENDERDRAGON_FIREBALL_EXPLODE" to victim at volume 100
+			play "ENTITY_ENDERDRAGON_FIREBALL_EXPLODE" to attacker at volume 100
+			apply wither 255 to the victim for 7 seconds
+
+on death of Ender Dragon:
+	if {vexen.dragonsgift.%attacker%} is true:
+		send "{@prefix} You have activated Dragon's Foot." to attacker
+		set {vexen.dragonsfoot.%attacker%} to true
+		wait 4320 seconds
+		set {vexen.dragonsfoot.%attacker%} to false
+	else if chance of 25%:
+		send "{@prefix} You have activated Dragon's Foot." to attacker
+		set {vexen.dragonsfoot.%attacker%} to true
+
+command /dragonsfoot [<player>]:
+	permission: mod
+	permission message: {@perm.mod}
+	trigger:
+		if {vexen.dragonsfoot.%arg-1%} is not true:
+			set {vexen.dragonsfoot.%arg-1%} to true
+		else:
+			set {vexen.dragonsfoot.%arg-1%} to false
+
+every 10 seconds:
+	loop all players:
+		if {vexen.dragonsfoot.%loop-player%} is true:
+			apply speed 1 to the loop-player for 11 seconds
+
+on death of Ender Dragon:
+	if {vexen.dragonsgift.%attacker%} is true:
+		execute console command "/egive %attacker% diamondsword 1 lore:&5Dragon_Sword"
+		wait 1 second
+		set {vexen.dragonsgift.%attacker%} to false
+		send "{@prefix} Your Gift of the Dragon has worn off."
+	else if chance of 2%:
+		execute console command "/egive %attacker% diamondsword 1 lore:&5Dragon_Sword"
+
+command /dragonsgift [<offline player>]:
+	permission: admin
+	permission message: {@perm.admin}
+	trigger:
+		if arg-1 is not set:
+			send "{@prefix} You need to specify someone to give the Gift of the Dragon to."
+		else:
+			if {vexen.dragonsgift.%arg-1%} is not true:
+				send "{@prefix} %arg-1% was given the Gift of the Dragon."
+				send "{@prefix} You were given the Gift of the Dragon." to arg 1
+				set {vexen.dragonsgift.%arg-1%} to true
+			else:
+				send "{@prefix} %arg-1%'s Gift of the Dragon wore off."
+				send "{@prefix} Your Gift of the Dragon has worn off." to arg 1
+				set {vexen.dragonsgift.%arg-1%} to false
+
+command /fakespawn [<text>]:
+	permission: admin
+	permission message: {@perm.admin}
+	trigger:
+		if arg-1 is not set:
+			send "{@prefix} Please put the name of whatever should be fake-spawned in."
+		else:
+			broadcast "&5&lVEXEN &8» &c%player% &7spawned &c%arg-1%&7."
+			send "{@prefix} Task completed."
+
+command /marry [<text>] [<player>]:
+	trigger:
+		if arg-1 is not set:
+			if {vexen.married.%player%} is true:
+				send "{@prefix} Since you're married, these are the only options available for you."
+				send "{@prefix} /marry divorce [name]"
+				send "{@prefix} /marry tp"
+				send "{@prefix} /marry toggletp"
+			else if {vexen.married.%player%} is not true:
+				send "{@prefix} Since you're not married, these are the only options available for you."
+				send "{@prefix} /marry toggle"
+				send "{@prefix} /propose [username]"
+				send "{@prefix} /propose [username] accept"
+		else if arg-1 is set:
+			if arg-1 is "toggle":
+				if {vexen.married.%player%} is true:
+					send "{@prefix} You cannot toggle marriage proposals, you're already married!"
+				else:
+					send "{@prefix} You toggled marriage proposals."
+					set {vexen.married.proposals.%player%} to false
+			else if arg-1 is "divorce":
+				if arg-2 is set:
+					if {vexen.married.%player%} is true:
+						if {vexen.married.%arg-2%} is true:
+							if {vexen.married.%player%.%arg-2%} is true:
+								broadcast "{@prefix} %player% and %arg-2% signed the divorce papers."
+								set {vexen.married.%player%.%arg-2%} to false
+								set {vexen.married.%arg-2%.%player%} to false
+								set {vexen.married.%arg-2%} to false
+								set {vexen.married.%player%} to false
+							else:
+								send "{@prefix} You need to be married to this person to divorce them..."
+						else:
+							send "{@prefix} They aren't even married..."
+					else:
+						send "{@prefix} You need to be married to divorce someone..."
+				else:
+					send "{@prefix} Who are you divorcing?"
+			else if arg-1 is "tp":
+				if {vexen.married.%player%} is true:
+					loop all players:
+						if {vexen.married.%player%.%loop-player%} is true:
+							if {vexen.married.tp.%loop-player%} is not false:
+								teleport player to loop-player
+								send "{@prefix} %player% teleported to you." to loop-player
+								send "{@prefix} You teleported to %loop-player%." to player
+							else:
+								send "{@prefix} Your partner has teleportation off. Use /tpa instead."
+						else:
+							send "{@prefix} Your partner doesn't seem to be online."
+				else:
+					send "{@prefix} You aren't married."
+			else if arg-1 is "tptoggle":
+				if {vexen.married.%player%} is true:
+					set {vexen.married.tp.%player%} to false
+					send "{@prefix} Toggled teleportation."
+				else:
+					send "{@prefix} Get married and come back later."
+
+command /propose [<player>] [<text>]:
+	trigger:
+		if arg-1 is not set:
+			send "{@prefix} /propose [username]"
+			send "{@prefix} /propose [username] accept"
+		else:
+			if arg-2 is not set:
+				if {vexen.married.%player%} is not true:
+					send "{@prefix} %player% proposed to you." to arg 1
+					send "{@prefix} You proposed to %arg-1%." to player
+					set {vexen.proposed.%player%.%arg-1%} to true
+					wait 60 seconds
+					set {vexen.proposed.%player%.%arg-1%} to false
+				else:
+					send "{@prefix} You're married. Divorce and come back."
+			else:
+				if {vexen.married.%player%} is not true:
+					if {vexen.proposed.%arg-1%.%player%} is true:
+						send "{@prefix} You accepted their proposal."
+						send "{@prefix} Your proposal was accepted." to arg 1
+						set {vexen.married.%player%} to true
+						set {vexen.married.%arg-1%} to true
+						set {vexen.married.%arg-1%.%player%} to true
+						set {vexen.married.%player%.%arg-1%} to true
+					else:
+						send "{@prefix} They haven't proposed to you."
+				else:
+					send "{@prefix} You're married. Divorce and come back."
+
+command /adminchat [<text>]:
+	aliases: /ac
+	trigger:
+		if arg-1 is not set:
+			send "{@prefix} Please specify what you want to say to admins."
+		else:
+			if player has permission "mod":
+				loop all players:
+					if loop-player has permission "mod":
+						if player has permission "admin":
+							send "{@prefix} &c%player% &8» &7%arg-1%" to loop-player
+						else:
+							send "{@prefix} &9%player% &8» &7%arg-1%" to loop-player
+			else:
+				send "{@prefix} Sent %arg-1% to admins."
+				loop all players:
+					if loop-player has permission "mod":
+						send "{@prefix} &f%player% &8» &7%arg-1%" to loop-player
+
+command /clearchat:
+	aliases: /cc
+	permission: mod
+	permission message: {@perm.mod}
+	trigger:
+		loop 999 times:
+			broadcast "&c"
+		broadcast "{@prefix} Chat has been cleared by &c%player%&7."
+
+command /chatslow [<integer>]:
+	aliases: /cs
+	permission: mod
+	permission message: {@perm.mod}
+	trigger:
+		if argument 1 is set:
+			if {vexen.silence} is set:
+				send "{@prefix} Chat is slowed. Disable silence to slow the chat."
+			else:
+				if {vexen.slow} is not set:
+					set {vexen.slow} to "%arg-2% seconds" parsed as timespan
+					broadcast "{@prefix} &c%player% &7has set the chat delay to &c%arg-1%&7 seconds."
+				else:
+					set {vexen.slow} to "%arg-2% seconds" parsed as timespan
+					broadcast "{@prefix} &c%player% &7has enabled chat slow."
+					broadcast "{@prefix} &c%player% &7has set the chat delay to &c%arg-1%&7 seconds."
+		else:
+			if {vexne.silence} is set:
+				send "{@prefix} Chat is silenced. Disable silence to slow the chat."
+			else:
+				if {vexen.slow} is set:
+					delete {vexen.slow}
+					broadcast "{@prefix} &c%player%&7 has disabled chat slow."
+				else:
+					send "{@prefix} You didn't enter a time limit, setting to 10 seconds."
+					set {vexen.slow} to "10 seconds" parsed as timespan
+					broadcast "{@prefix} &c%player% &7has enabled chat slow."
+					broadcast "{@prefix} &c%player% &7has set the chat delay to &c10 &7seconds."
+
+command /silence:
+	aliases: /chatsilence
+	permission: mod
+	permission message: {@perm.mod}
+	trigger:
+		if {vexen.slow} is set:
+			delete {vexen.chatslow}
+			broadcast "{@prefix} &c%player% &7has disabled chat slow."
+			set {vexen.silence} to true
+			broadcast "{@prefix} The chat has been silenced."
+		if {vexen.silence} is set:
+			delete {vexen.silence}
+			broadcast "{@prefix} Chat is no longer silenced."
+		else:
+			set {vexen.silence} to true
+			broadcast "{@prefix} The chat has been silenced."
+
+on chat:
+	if {vexen.silence} is "true":
+		if player has permission "mod":
+			stop
+		else:
+			send "{@prefix} Chat is currently disabled."
+
+command /cpm [<player>] [<text>]:
+	permission: admin
+	permission message: {@perm.admin}
+	trigger:
+		send "%arg-2%" to arg-1
+
+command /cm [<text>]:
+	permission: admin
+	permission message: {@perm.admin}
+	trigger:
+		broadcast "%arg-1%"
+
+command /console [<text>]:
+	permission: admin
+	permission message: {@perm.admin}
+	trigger:
+		execute console command "%arg-1%"
+		send "&5VEXEN &8» &7Ran &f%arg-1%&7."
+
+command /shenron [<text>]:
+	permission: admin
+	permission message: {@perm.admin}
+	trigger:
+		broadcast "&aShenron &8» &7%arg-1%"
+
+command /shenronerase [<player>]:
+	permission: admin
+	permission message: {@perm.admin}
+	trigger:
+		broadcast "&aShenron &8» &cHakai."
+		wait 1 second
+		kill arg-1
+		broadcast "{@prefix} %arg-1% was killed by &aShenron&7."
+
+command /spawnshenron:
+	permission: admin
+	permission message: {@perm.admin}
+	trigger:
+		broadcast "{@prefix} &aShenron &7has spawned."
+
+command /op [<offline player>]:
+	permission: admin
+	permission message: {@perm.admin}
+	trigger:
+		if arg-1 is not set:
+			send "{@prefix} /op [name] stuped idot"
+		else:
+			op arg 1
+			broadcast "&5&lVEXEN &8» &f%player% &7has given &f%arg-1%&7 Operator permissions."
+
+command /mute [<player>] [<number>] [<text>]:
+	permission: mod
+	permission message: {@perm.mod}
+	trigger:
+		if arg 3 is not set:
+			send "{@prefix} /mute [player] [time (in minutes)] [reason]"
+		else:
+			if {vexen.muted.%arg-1%} is "true":
+				send "{@prefix} That player is already muted."
+			else:
+				set {vexen.muted.%arg-1%} to true
+				set {vexen.muted.staff.%arg-1%} to player
+				set {vexen.muted.reason.%arg-1%} to arg-3
+				set {vexen.muted.time.%arg-1%} to arg-2
+				send "&5&lVEXEN &8» &c%player% &7muted you for &c%arg-2% minute(s)&7 for &c%arg-3%&7." to arg-1
+				broadcast "&5&lVEXEN &8» &c%player% &7muted &c%arg-1% &7for &c%arg-2% minute(s)&7."
+
+every 1 minutes:
+	loop all players:
+		if {vexen.muted.time.%loop-player%} is equal to 0:
+			set {vexen.muted.%loop-player%} to false
+			broadcast "&5&lVEXEN &8» &cConsole &7unmuted &c%loop-player%&7."
+			clear {vexen.muted.time.%loop-player%}
+
+command /unmute [<player>]:
+	permission: mod
+	permission message: {@perm.mod}
+	trigger:
+		if {vexen.muted.%arg-1%} is false:
+			send "{@prefix} That player is not muted."
+		else:
+			set {vexen.muted.%arg-1%} to false
+			broadcast "&5&lVEXEN &8» &c%player% &7unmuted &c%arg-1%&7."
+			clear {vexen.muted.time.%arg-1%}
+
+every 1 minutes:
+	loop all players:
+		if {vexen.muted.time.%loop-player%} is more than 0:
+			remove 1 from {vexen.muted.time.%loop-player%}
+
+on chat:
+	if {vexen.muted.%player%} is true:
+		cancel event
+
+command /ki:
+	permission: mod
+	permission message: {@perm.mod}
+	trigger:
+		execute console command "/minecraft:gamerule keepInventory true"
+		broadcast "&5&lVEXEN &8» &c%player% &7enabled variable: &ckeepInventory&7."
+
+command /noki:
+	permission: mod
+	permission message: {@perm.mod}
+	trigger:
+		execute console command "/minecraft:gamerule keepInventory false"
+		broadcast "&5&lVEXEN &8» &c%player% &7disabled variable: &ckeepInventory&7."
+
+command /warn [<offline player>] [<text>]:
+	permission: mod
+	permission message: {@perm.mod}
+	trigger:
+		if arg-2 is not set:
+			send "{@prefix} /warn [name] [reason]"
+		else:
+			send "{@prefix} You were warned by &c%player% &7for &c%arg-2%&7." to arg 1
+			broadcast "&5&lVEXEN &8» &c%player% &7warned &c%arg-1%&7 for &c%arg-2%&7."
+			add 1 to {vexen.warning:%arg-1's uuid%}
+
+command /unwarn [<offline player>]:
+	permission: mod
+	permission message: {@perm.mod}
+	trigger:
+		if arg-1 is not set:
+			send "{@prefix} /unwarn [name]"
+		else:
+			send "{@prefix} You had a warning removed by &c%player%&7." to arg 1
+			broadcast "&5&lVEXEN &8» &c%player% &7removed one of &c%arg-1%&7's warnings."
+			remove 1 from {vexen.warning:%arg-1's uuid%}
+
+command /kick [<offline player>] [<text>]:
+	permission: mod
+	permission message: {@perm.mod}
+	trigger:
+		if arg-2 is not set:
+			send "{@prefix} /kick [name] [reason]"
+		else:
+			kick arg 1 due to "&cKicked from the game.%nl%%nl%&cKicked by %player% for %arg-2%."
+			broadcast "&5&lVEXEN &8» &c%player% &7kicked &c%arg-1% &7for &c%arg-2%&7."
+
+command /ban [<offline player>] [<text>]:
+	permission: mod
+	permission message: {@perm.mod}
+	trigger:
+		if arg-2 is not set:
+			send "{@prefix} /ban [name] [reason]"
+		else:
+			kick arg 1 due to "&cAccount terminated.%nl%%nl%&cBanned by %player% for %arg-2%%nl%&e%nl%&bBanned permanently."
+			ban arg 1 due to "&cAccount terminated.%nl%&cBanned by %player% for %arg-2%%nl%&e%nl%&bBanned permanently."
+			broadcast "&5&lVEXEN &8» &c%player% &7banned &c%arg-1% &7permanently for &c%arg-2%&7."
+			set {vexen.%arg-1%.banned} to "true"
+
+command /tempban [<offline player>] [<text>] [<text>]:
+	aliases: /tban
+	permission: mod
+	permission message: {@perm.mod}
+	trigger:
+		if arg-3 is not set:
+			send "{@prefix} /ban [name] [length] [reason]"
+		else:
+			broadcast "&5&lVEXEN &8» &c%player% &7banned &c%arg-1% &7for &c%arg-2% &7for &c%arg-3%&7."
+			execute console command "/etempban %arg-1% %arg-2% Account terminated. Banned by %player% for %arg-3%. Banned temporarily."
+
+command /freeze [<player>]:
+	permission: mod
+	permission message: {@perm.mod}
+	trigger:
+		if arg-1 is not set:
+			send "{@prefix} Specify a player to freeze."
+		else:
+			if {vexen.frozen.%arg-1%} is not true:
+				set {vexen.frozen.%arg-1%} to true
+				send "&e----------------------------" to arg 1
+				send "&5YOU HAVE BEEN FROZEN BY %player%." to arg 1
+				send "&5" to arg 1
+				send "&5DO NOT LOG OUT - YOU WILL BE BANNED" to arg 1
+				send "&e----------------------------" to arg 1
+			else:
+				send "{@prefix} You were unfrozen." to arg 1
+				set {vexen.frozen.%arg-1%} to false
+
+on any movement:
+	if {vexen.frozen.%player%} is true:
+		if {vexen.freezebug} is not true:
+			cancel event
+
+on damage:
+	if {vexen.frozen.%attacker%} is true:
+		if {vexen.freezebug} is not true:
+			cancel event
+	else if {vexen.frozen.%victim%} is true:
+		if {vexen.freezebug} is not true:
+			cancel event
+
+on quit:
+	if {vexen.frozen.%player%} is true:
+		if {vexen.freezebug} is not true:
+			loop all players:
+				if loop-player has permission "mod":
+					send "{@prefix} %player% logged out while frozen. Type /stopban to cancel their autoban in 10 seconds."
+					wait 10 seconds
+					if {vexen.banstopped} is not true:
+						ban %player% due to "&cAccount terminated.%nl%&cBanned by &5VAC&c for Cheating.%nl%&e%nl%&bBanned permanently."
+
+command /stopban:
+	permission: mod
+	permission message: {@perm.mod}
+	trigger:
+
+command /blacklist [<offline player>]:
+	permission: admin
+	permission message: {@perm.admin}
+	trigger:
+		if arg 1 is not set:
+			send "{@prefix} /blacklist [name] - ONLY USE THIS FOR MAJOR PUNISHMENTS, MORE THAN CHEATING."
+		else:
+			kick arg 1 due to "&cYour account was blacklisted by %player%."
+			ban arg 1 due to "&cYour account was blacklisted by %player%."
+			ban ip of arg 1 due to "&cYour account was blacklisted by %player%."
+			broadcast "&5&lVEXEN &8» &c%player% &7blacklisted &c%arg-1%&7."
+			set {vexen.%arg-1%.banned} to "true"
+
+command /unblacklist [<offline player>]:
+	permission: admin
+	permission message: {@perm.admin}
+	trigger:
+		if arg 1 is not set:
+			send "{@prefix} /unblacklist [name]"
+		else:
+			unban ip of arg 1
+			unban arg-1
+			broadcast "&5&lVEXEN &8» &c%player% &7unblacklisted &c%arg-1%&7."
+			set {vexen.%arg-1%.banned} to "false"
+
+command /unban [<offline player>]:
+	aliases: /pardon
+	permission: mod
+	permission message: {@perm.mod}
+	trigger:
+		if arg 1 is not set:
+			send "{@prefix} /unban [name]"
+		else:
+			unban arg-1
+			unban ip of arg 1
+			broadcast "&5&lVEXEN &8» &c%player% &7unbanned &c%arg-1%."
+			execute console command "/eunban %arg-1%"
+			execute console command "/unbanip %arg-1%"
+
+command /staff:
+	permission: mod
+	permission message: {@perm.mod}
+	trigger:
+		send "{@error}"
+
+command /vanish:
+	aliases: /v
+	permission: mod
+	permission message: {@perm.mod}
+	trigger:
+		if {vexen.vanish.%player%} is not true:
+			send "{@prefix} You are no longer visible to normal players. Only &9Moderator&7 and &cAdministrator&7 ranks can see you."
+			set {vexen.vanish.%player%} to true
+			set {vexen.pickup.%player%} to false
+			execute console command "/essentials:vanish %player% on"
+			loop all players:
+				if loop-player has permission "mod":
+					send "{@prefix} %player% vanished." to loop-player
+		else if {vexen.vanish.%player%} is true:
+			send "{@prefix} You are now visible to all players."
+			set {vexen.vanish.%player%} to false
+			set {vexen.pickup.%player%} to true
+			execute console command "/essentials:vanish %player% off"
+			remove invisiblity from the player
+			loop all players:
+				if loop-player has permission "mod":
+					send "{@prefix} %player% unvanished." to loop-player
+
+command /fullvanish:
+	aliases: /fv
+	permission: admin
+	permission message: {@perm.admin}
+	trigger:
+		if {vexen.vanish.%player%} is not true:
+			if {vexen.fullvanish.%player%} is not true:
+				send "{@prefix} You are fully vanished to all players, even &cAdministrator&7s."
+				set {vexen.pickup.%player%} to false
+				broadcast "&e%player% left the game"
+				hide player from all players
+			else:
+				send "{@prefix} You are no longer fully vanished."
+				set {vexen.pickup.%player%} to true
+				broadcast "&e%player% joined the game"
+				reveal player from all players
+		else:
+			send "{@prefix} You cannot Full Vanish while vanished."
+
+command /announce [<text>]:
+  aliases: /bc, /broadcast
+  permission: mod
+  permission message: {@perm.mod}
+  trigger:
+    broadcast "{@prefix} %arg-1%"
+
+command /vrestart [<text>]:
+	permission: admin
+	permission message: {@perm.admin}
+	trigger:
+		if arg-1 is set:
+			broadcast "{@prefix} Saving..."
+			execute console command "/save-all"
+			wait 5 seconds
+			broadcast "{@prefix} Saved. Restarting..."
+			loop all players:
+				execute console command "/kick %loop-player% Server restart issued by %player% due to %arg-1%."
+			execute console command "/restart"
+
+command /vac [<text>]:
+	permission: admin
+	permission message: {@perm.admin}
+	trigger:
+		if arg-1 is set:
+			broadcast "{@acprefix} %arg-1%"
+
+command /vacban [<player>] [<reason>]:
+	permission: admin
+	permission message: {@perm.admin}
+	trigger:
+	 	if arg-2 is not set:
+			send "{@acprefix} /vacban [player] [reason]"
+		else:
+			kick arg 1 due to "&cAccount terminated.%nl%%nl%&cBanned by &5&lVAC&c for %arg-2%%nl%&e%nl%&bBanned permanently."
+			execute console command "/banip %arg-1% Banned by VAC: %arg-2%"
+			broadcast "&5&lVEXEN &8» &c%player% &7banned &c%arg-1% &7permanently for &c%arg-2%&7."
+
+command /hiv [<player>]:
+	permission: mod
+	permission message: {@perm.mod}
+	trigger:
+		if arg-1 is not set:
+			send "{@prefix} Specify a player."
+		else:
+			if {vexen.hiv.%arg-1%} is not true:
+				broadcast "{@prefix} &c%arg-1%&7 now has &cHIV&7."
+				set {vexen.hiv.%arg-1%} to true
+			else:
+				broadcast "{@prefix} &c%arg-1%&7 no longer has &cHIV&7."
+				set {vexen.hiv.%arg-1%} to false
+
+every 10 seconds:
+	loop all players:
+		if {vexen.hiv.%loop-player%} is true:
+			apply blindness 1 to the loop-player for 2 seconds
+			apply weakness 1 to the loop-player for 10 seconds
+			apply slowness 1 to the loop-player for 10 seconds
+			chance of 5%:
+				apply hunger 1 to the loop-player for 5 seconds
+				apply wither 255 to the loop-player for 3 seconds
+
+command /fling [<player>]:
+	permission: mod
+	permission message: {@perm.mod}
+	trigger:
+		if arg-1 is not set:
+			send "{@prefix} Specify a player."
+		else:
+			broadcast "{@prefix} &c%player% &7flung &c%arg-1%&7."
+			loop 200 times:
+				push arg-1 upwards
+
+command /ui:
+	permission: ui
+	permission message: &5&lVEXEN &8» &7You do not have permission &fui&7 required to execute this command.
+	trigger:
+		if {vexen.ui.%player%} is not true:
+			send "{@prefix} Ultra Instinct Omen activated."
+			set {vexen.ui.%player%} to true
+		else:
+			send "{@prefix} Powering down."
+			set {vexen.ui.%player%} to false
+
+on damage:
+	if {vexen.ui.%victim%} is true:
+		if {vexen.ui.%attacker%} is not true:
+			cancel event
+			send "{@prefix} &c%player% &7dodges, using Ultra Instinct."
+	else:
+		if {vexen.ui.%attacker%} is true:
+			cancel event
+			execute console command "/minecraft:effect give %victim% instant_damage 1 0 true"
+
+command /hakai [<player>]:
+	permission: hakai
+	permission message: &5&lVEXEN &8» &7You do not have permission &fhakai&7 required to execute this command.
+	trigger:
+		if arg-1 is set:
+			broadcast "&5[Beerus] %player% &8» &7A solid attempt."
+			wait 1 seconds
+			broadcast "&5[Beerus] %player% &8» &c&oHakai."
+			apply blindness 1 to arg-1 for 2 seconds
+			apply weakness 255 to arg-1 for 2 seconds
+			apply slowness 255 to arg-1 for 2 seconds
+			wait 2 seconds
+			kill arg-1
+
+on mine of diamond ore:
+	if chance of 5%:
+		execute console command "/egive %player% diamond 1 name:&5Amethyst lore:&cDo_Not_Rename_-_Exchange_With_Worksman"
+
+command /supersaiyan:
+	aliases: /ssj
+	permission: nitro
+	permission message: &5&lVEXEN &8» &7You do not have permission &fnitro&7 required to execute this command.
+	trigger:
+		if {vexen.cooldown.ssj.%player%} is not true:
+			if {vexen.ssj.%player%} is not true:
+				broadcast "&5&lVEXEN &8» &7%player% goes Super Saiyan."
+				execute console command "/esudo %player% c:HAA!"
+				apply speed 3 to player for 150 seconds
+				apply strength 1 to player for 150 seconds
+				apply resistance 1 to player for 150 seconds
+				set {vexen.ssj.%player%} to true
+				wait 150 seconds
+				if {vexen.ssj.%player%} is true:
+					broadcast "&5&lVEXEN &8» &7%player% powers down."
+					set {vexen.ssj.%player%} to false
+					set {vexen.cooldown.ssj.%player%} to true
+					send "&5&lVEXEN &8» &7Super Saiyan cooldown activated."
+					wait 300 seconds
+					set {vexen.cooldown.ssj.%player%} to false
+					send "&5&lVEXEN &8» &7Super Saiyan is no longer on cooldown."
+			else:
+				broadcast "&5&lVEXEN &8» &7%player% powers down."
+				remove resistance from the player
+				remove speed from the player
+				remove strength from the player
+				set {vexen.ssj.%player%} to false
+				set {vexen.cooldown.ssj.%player%} to true
+				send "&5&lVEXEN &8» &7Super Saiyan cooldown activated."
+				wait 300 seconds
+				set {vexen.cooldown.ssj.%player%} to false
+				send "&5&lVEXEN &8» &7Super Saiyan is no longer on cooldown."
+		else:
+			send "&5&lVEXEN &8» &7Super Saiyan is on cooldown."
