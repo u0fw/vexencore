@@ -1032,7 +1032,7 @@ command /vac [<text>]:
 		if arg-1 is set:
 			broadcast "{@acprefix} %arg-1%"
 
-command /vacban [<player>] [<reason>]:
+command /vacban [<player>] [<text>]:
 	permission: admin
 	permission message: {@perm.admin}
 	trigger:
@@ -1093,7 +1093,7 @@ on damage:
 	if {vexen.ui.%victim%} is true:
 		if {vexen.ui.%attacker%} is not true:
 			cancel event
-			send "{@prefix} &c%player% &7dodges, using Ultra Instinct."
+			send "{@prefix} &c%player% &7dodges, using Ultra Instinct." to attacker
 	else:
 		if {vexen.ui.%attacker%} is true:
 			cancel event
